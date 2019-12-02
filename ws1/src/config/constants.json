@@ -1,0 +1,30 @@
+{
+    "op01": {
+        "bandeirasAutorizadas": {
+            "mister" : false,
+            "vista"  : true,
+            "daciolo": true
+        },
+        "lojasAutorizadas": {
+            "loja01": true,
+            "loja02": true,
+            "loja03": true
+        }
+    },
+    "op02": {
+        "bandeirasAutorizadas": {
+            "vista"  : true
+        },
+        "lojasAutorizadas": {
+            "loja02": true
+        }
+    },
+    "op03": {
+        "bandeirasAutorizadas": {
+            "daciolo": true
+        },
+        "lojasAutorizadas": {
+            "loja03": true
+        }
+    }
+}
