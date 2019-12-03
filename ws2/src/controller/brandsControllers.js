@@ -18,29 +18,33 @@ module.exports = {
     try {
       const {
         codBrand   ,
-        nameClient ,
         brand      ,
         codSecurity,
         value      ,
         laPar      ,
         operetor   ,
-        store      ,
       } = req.body
 
-      let codBrandCard = codBrand.split('.')
-      console.log('sinal de vida 1')
+      let codBrandCard = codBrand.split('.') // criando um array semparando pelo pontos
+      console.log(
+        !Brand.hasOwnProperty(brand), !(Brand[brand].codBandeira == codBrandCard[0]) ,  !Brand[brand].operadoresPermitidos.hasOwnProperty(operetor)
+      )
+      console.log(
+        !Brand.hasOwnProperty(brand) || !Brand[brand].codBandeira == codBrandCard[0] || !Brand[brand].operadoresPermitidos.hasOwnProperty(operetor)
+      )
       if (
-        !Brand.hasOwnProperty(brand) && 
-        !Brand[brand].codBandeira == codBrandCard[0] &&  
+        !Brand.hasOwnProperty(brand) ||
+        !(Brand[brand].codBandeira == codBrandCard[0]) ||  
         !Brand[brand].operadoresPermitidos.hasOwnProperty(operetor)
       ) {
+        console.log("error")
         return res.status(401).json({
           cod_resposta  : "operadora-negada",
           resposta      : "falha",
-          detalhes      : "Operadora sem relação com a bandeira",
+          detalhes      : "Operadora sem relação com a bandeira ou falha na leitura do codigo, por favor limpa o cartão ou solicita um novo na agencia mais perto de você, trouxa(mundo bruxo que fla, vlw flw)",
           cod_operadora : operetor
         })
-      }else if(!!(laPar <= Brand[brand].limiteParcela)) {
+      }else if(!(laPar <= Brand[brand].limiteParcela)) {
         return res.status(401).json({
           resposta              : "falha",
           detalhes              : "Limite de parcelas ultrapassado",
@@ -52,13 +56,10 @@ module.exports = {
 
       const response = await ws4.post('/ws-banks/v1/pay', {
         codBrand   ,
-        nameClient ,
         brand      ,
         codSecurity,
         value      ,
         laPar      ,
-        operetor   ,
-        store      ,
       })
 
       return res.status(200).json(response.data)

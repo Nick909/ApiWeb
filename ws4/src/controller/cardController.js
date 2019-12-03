@@ -17,17 +17,14 @@ module.exports = {
     try {
       const {
         codBrand   ,
-        nameClient ,
         brand      ,
         codSecurity,
         value      ,
         laPar      ,
-        operetor   ,
-        store      ,
       } = req.body
       console.log('sinal de vida 1')
         
-      let cardUser = await query(`SELECT * FROM tb_cartao WHERE numero = "${codBrand}"`)
+      let cardUser = await query(`SELECT * FROM tb_cartao WHERE numero = "${codBrand}" AND bandeira = "${brand}" And cod_seguranca = ${codSecurity}`)
       cardUser = cardUser[0]
       
       if(!(cardUser)){    
@@ -42,7 +39,7 @@ module.exports = {
 
       let ano = new Date().getFullYear()// pega o ano
       let mes = new Date().getMonth()  // pega o mes
-      let dia = '3'
+      let dia = cardUser.dia_fechamento_fatura
       //let dateMonth = new Date(ano, mes + 1, 0)// quantidade de dias do mês
       let dateNow = new Date().toLocaleDateString("pt-BR")// data atual
       
@@ -56,20 +53,25 @@ module.exports = {
       
       
       let anoTable  = cardFatura[cardFatura.length - 1].data_final.toLocaleDateString()
-      let e = 0
       let valorParcelado = parseFloat(value / laPar)
-
+      let ano2
+      let mes2
       for(let I = 0; I < laPar; I++ ) {
         mes++
-        e++
         if(anoTable == `${ano}-${mes}-${dia}`){
-          for(let i = 0; i < laPar - e; i++) {
+          for(let i = 0; i < laPar - I; i++) {
             if(mes == '12') {
               mes = '0'
               ano++
             }
             mes++
-            await query(`INSERT INTO tb_fatura (tb_cartao_id, data_inicial, data_final) VALUES (${cardUser.id}, "${'2019-04-02'}", "${ano}-${mes}-${dia}") `)
+            mes2 = mes - 1
+            ano2 = ano
+            if(mes2 == '0'){
+              mes2 = '12'
+              ano2 = ano - 1
+            }
+            await query(`INSERT INTO tb_fatura (tb_cartao_id, data_inicial, data_final) VALUES (${cardUser.id}, "${ano2}-${mes2}-${parseInt(dia) + 1}", "${ano}-${mes}-${dia}") `)
           }
           break;
         }

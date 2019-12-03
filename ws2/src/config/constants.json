@@ -2,7 +2,7 @@
     "mister": {
         "codBandeira": "1111",
         "bandeira": "mister",
-        "limiteParcela": "12",
+        "limiteParcela": 12,
         "operadoresPermitidos": {
             "op01": true,
             "op02": true,
@@ -13,7 +13,7 @@
     "vista": {
         "codBandeira": "2222",
         "bandeira": "vista",
-        "limiteParcela": "6",
+        "limiteParcela": 6,
         "operadoresPermitidos": {
             "op02": true
         }
@@ -22,7 +22,7 @@
     "daciolo": {
         "codBandeira": "3333",
         "bandeira": "daciolo",
-        "limiteParcela": "4",
+        "limiteParcela": 4,
         "operadoresPermitidos": {
             "op03": true
         }

@@ -17,14 +17,13 @@ module.exports = {
   async testOperetor(req, res) {
     try {
       const {
-        codBrand   ,
-        nameClient ,
+        operetor   ,
         brand      ,
+        store      ,
+        codBrand   ,
         codSecurity,
         value      ,
         laPar      ,
-        operetor   ,
-        store      ,
       } = req.body
       console.log('sinal de vida 1')
 
@@ -52,7 +51,6 @@ module.exports = {
 
       const response = await ws2.post('/ws-brands/v1/pay', {
         codBrand   ,
-        nameClient ,
         brand      ,
         codSecurity,
         value      ,
